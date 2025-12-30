@@ -13,7 +13,7 @@ class JellyfinNextUpCard extends HTMLElement {
       show_thumbnails: false,
       jellyfin_host: '',
       default_player: 'web',
-      roku_entity_id: '',
+      android_entity_id: '',
       hide_play_button: false,
       show_runtime: true
     }
@@ -103,7 +103,7 @@ class JellyfinNextUpCard extends HTMLElement {
           }
         } else {
           itemHtml += webButton;
-          if (this.config.roku_entity_id) {
+          if (this.config.android_entity_id) {
             itemHtml += rokuButton;
           }
         }
@@ -149,8 +149,8 @@ class JellyfinNextUpCard extends HTMLElement {
     if (config.default_player && !config.hide_play_button) {
       switch (config.default_player) {
         case 'roku': {
-          if (!config.roku_entity_id) {
-            throw new Error('You need to add your roku_entity_id to use a roku as the default_player.');
+          if (!config.android_entity_id) {
+            throw new Error('You need to add your android_entity_id to use a roku as the default_player.');
           }
           break;
         }
@@ -199,7 +199,7 @@ class JellyfinNextUpCard extends HTMLElement {
     switch (player) {
       case 'roku': {
         this._hass.callService('media_player', 'play_media', {
-          entity_id: this.config.roku_entity_id,
+          entity_id: this.config.android_entity_id,
           media_content_id: 592369,
           media_content_type: 'app',
           extra: {
