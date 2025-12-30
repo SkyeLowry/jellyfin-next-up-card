@@ -88,23 +88,23 @@ class JellyfinNextUpCard extends HTMLElement {
       }
 
       if (!this.config.hide_play_button) {
-        const rokuButton = `<br><button class="play-episode" onclick="playJellyfinEpisode('${item.Id}', 'roku')">
+        const androidButton = `<br><button class="play-episode" onclick="playJellyfinEpisode('${item.Id}', 'android')">
           <ha-icon icon="mdi:play"></ha-icon>
-          ${item._Type === 'resume' ? 'Resume' : 'Play'} Episode on Roku
+          ${item._Type === 'resume' ? 'Resume' : 'Play'} Episode on TV
         </button>`;
         const webButton = `<br><button class="play-episode" onclick="playJellyfinEpisode('${item.Id}', 'web')">
           <ha-icon icon="mdi:play"></ha-icon>
           ${item._Type === 'resume' ? 'Resume' : 'Play'} Episode in Browser
         </button>`;
-        if (this.config.default_player === 'roku') {
-          itemHtml += rokuButton;
+        if (this.config.default_player === 'android') {
+          itemHtml += androidButton;
           if (this.config.jellyfin_host) {
             itemHtml += webButton;
           }
         } else {
           itemHtml += webButton;
           if (this.config.android_entity_id) {
-            itemHtml += rokuButton;
+            itemHtml += androidButton;
           }
         }
       }
@@ -148,9 +148,9 @@ class JellyfinNextUpCard extends HTMLElement {
     }
     if (config.default_player && !config.hide_play_button) {
       switch (config.default_player) {
-        case 'roku': {
+        case 'android': {
           if (!config.android_entity_id) {
-            throw new Error('You need to add your android_entity_id to use a roku as the default_player.');
+            throw new Error('You need to add your android_entity_id to use an android TV as the default_player.');
           }
           break;
         }
@@ -161,7 +161,7 @@ class JellyfinNextUpCard extends HTMLElement {
           break;
         }
         default:
-          throw new Error('Invalid value for default_player. Supported values are "web" and "roku".');
+          throw new Error('Invalid value for default_player. Supported values are "web" and "android".');
       }
     }
     this.config = config;
@@ -197,7 +197,7 @@ class JellyfinNextUpCard extends HTMLElement {
     }
     //console.log(this);
     switch (player) {
-      case 'roku': {
+      case 'android': {
         this._hass.callService('media_player', 'play_media', {
           entity_id: this.config.android_entity_id,
           media_content_id: 592369,
