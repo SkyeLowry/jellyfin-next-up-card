@@ -1,0 +1,18 @@
+{
+  "name": "jellyfin-next-up-card",
+  "version": "1.0.0",
+  "description": "Lovelace jellyfin-next-up-card",
+  "keywords": [
+    "home-assistant",
+    "homeassistant",
+    "hass",
+    "automation",
+    "lovelace",
+    "custom-cards"
+  ],
+  "module": "jellyfin-next-up-card.js",
+  "repository": "git@github.com:SkyeLowry/jellyfin-next-up-card.git",
+  "author": "Skye Lowry <patrickskyelowry@gmail.com>",
+  "license": "MIT",
+  "type": "module",
+}
