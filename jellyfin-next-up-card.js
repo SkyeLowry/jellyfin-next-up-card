@@ -196,6 +196,7 @@ class JellyfinNextUpCard extends HTMLElement {
       player = this.config.default_player;
     }
     //console.log(this);
+    //adb shell am start  -c android.intent.category.LEANBACK_LAUNCHER -a android.intent.action.VIEW -d "jellyfin://play?id=a6316ea0daa0e04fe82537742b6fe5ed" -n org.jellyfin.androidtv/.ui.startup.StartupActivity
     switch (player) {
       case 'android': {
         this._hass.callService('media_player', 'play_media', {
