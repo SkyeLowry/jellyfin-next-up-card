@@ -199,14 +199,12 @@ class JellyfinNextUpCard extends HTMLElement {
     //adb shell am start  -c android.intent.category.LEANBACK_LAUNCHER -a android.intent.action.VIEW -d "jellyfin://play?id=a6316ea0daa0e04fe82537742b6fe5ed" -n org.jellyfin.androidtv/.ui.startup.StartupActivity
     switch (player) {
       case 'android': {
-        this._hass.callService('media_player', 'play_media', {
+        // Construct the intent command with the dynamic episodeId
+        const adbCommand = `am start -c android.intent.category.LEANBACK_LAUNCHER -a android.intent.action.VIEW -d "jellyfin://play?id=${episodeId}" -n org.jellyfin.androidtv/.ui.startup.StartupActivity`;
+
+        this._hass.callService('androidtv', 'adb_command', {
           entity_id: this.config.android_entity_id,
-          media_content_id: 592369,
-          media_content_type: 'app',
-          extra: {
-            content_id: episodeId,
-            media_type: 'episode'
-          }
+          command: adbCommand
         });
         break;
       }
