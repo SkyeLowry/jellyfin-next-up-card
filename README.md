@@ -44,7 +44,7 @@ There are two main parts to getting this card to work: creating the REST sensors
 - Edit the dashboard where you want to include the card. This card is designed for use as a panel (single-card view) so it may not look right in masonry or other layouts.
 - Add the card using the example YAML config below.
   - Replace `<jellyfin-host>` with your Jellyfin domain or IP:port, just like in the REST sensor setup.
-  - If you have a Roku, replace `<roku-id>` with your Roku's entity ID, i.e. `media_player.bedroom_tv`. If you don't, delete the line or set the value to `''`.
+  - If you have a Android TV with ADB, replace `<android_entity_id>` with your ADB's entity ID, i.e. `media_player.bedroom_tv`. If you don't, delete the line or set the value to `''`.
     - Set the `default_player` to determine which button appears first ~~and which player to use when clicking on the episode thumbnail/details~~ (coming soon.)
 
 ```yaml
@@ -55,7 +55,7 @@ resume_sensor: sensor.jellyfin_resume
 show_thumbnails: true
 jellyfin_host: <jellyfin-host>
 default_player: web
-roku_entity_id: <roku-id>
+android_entity_id: <android-adb-entity-id>
 hide_play_button: false
 show_runtime: true
 ```
