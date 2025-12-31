@@ -14,5 +14,5 @@
   "repository": "git@github.com:SkyeLowry/jellyfin-next-up-card.git",
   "author": "Skye Lowry <patrickskyelowry@gmail.com>",
   "license": "MIT",
-  "type": "module",
+  "type": "module"
 }

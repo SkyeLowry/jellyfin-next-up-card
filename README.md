@@ -58,6 +58,7 @@ default_player: web
 android_entity_id: <android-adb-entity-id>
 hide_play_button: false
 show_runtime: true
+show_browser_option: true
 ```
 
 - Now you should be able to see all the shows you're watching!

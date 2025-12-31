@@ -15,7 +15,8 @@ class JellyfinNextUpCard extends HTMLElement {
       default_player: 'web',
       android_entity_id: '',
       hide_play_button: false,
-      show_runtime: true
+      show_runtime: true,
+      show_browser_option: false
     }
   }
   // Whenever the state changes, a new `hass` object is set. Use this to
@@ -88,6 +89,7 @@ class JellyfinNextUpCard extends HTMLElement {
       }
 
       if (!this.config.hide_play_button) {
+        const showBrowserOption = this.config.show_browser_option === true;
         const androidButton = `<br><button class="play-episode" onclick="playJellyfinEpisode('${item.Id}', 'android')">
           <ha-icon icon="mdi:play"></ha-icon>
           ${item._Type === 'resume' ? 'Resume' : 'Play'} Episode on TV
@@ -98,11 +100,13 @@ class JellyfinNextUpCard extends HTMLElement {
         </button>`;
         if (this.config.default_player === 'android') {
           itemHtml += androidButton;
-          if (this.config.jellyfin_host) {
+          if (showBrowserOption && this.config.jellyfin_host) {
             itemHtml += webButton;
           }
         } else {
-          itemHtml += webButton;
+          if (showBrowserOption) {
+            itemHtml += webButton;
+          }
           if (this.config.android_entity_id) {
             itemHtml += androidButton;
           }
@@ -164,7 +168,11 @@ class JellyfinNextUpCard extends HTMLElement {
           throw new Error('Invalid value for default_player. Supported values are "web" and "android".');
       }
     }
-    this.config = config;
+    this.config = {
+      ...config,
+      // Only show the browser button when explicitly enabled.
+      show_browser_option: config.show_browser_option === true
+    };
   }
 
   // The height of your card. Home Assistant uses this to automatically
