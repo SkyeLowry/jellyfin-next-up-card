@@ -1,5 +1,5 @@
 console.info(
-  `%c  JELLYFIN-NEXT-UP-CARD  \n%c      Version 1.0.0      `,
+  `%c  JELLYFIN-NEXT-UP-CARD  \n%c      Version 1.2.0      `,
   'color: orange; font-weight: bold; background: black',
   'color: white; font-weight: bold; background: dimgray'
 );
@@ -17,7 +17,8 @@ class JellyfinNextUpCard extends HTMLElement {
       hide_play_button: false,
       show_runtime: true,
       show_browser_option: false,
-      display_new_seasons: true
+      display_new_seasons: true,
+      episode_limit: 0
     }
   }
   // Whenever the state changes, a new `hass` object is set. Use this to
@@ -49,6 +50,7 @@ class JellyfinNextUpCard extends HTMLElement {
       return;
     }
     let items = state.attributes.Items;
+    const episodeLimit = Number(this.config.episode_limit) || 0;
 
     if (this.config.include_resume) {
       const resumeSensorId = this.config.resume_sensor;
@@ -131,6 +133,9 @@ class JellyfinNextUpCard extends HTMLElement {
       }
 
       itemsHTML.push(itemHtml);
+      if (episodeLimit > 0 && itemsHTML.length >= episodeLimit) {
+        break;
+      }
     }
 
     itemsHTML.push(`<style>${JellyfinNextUpCard.getStyle()}</style>`);
@@ -174,12 +179,23 @@ class JellyfinNextUpCard extends HTMLElement {
           throw new Error('Invalid value for default_player. Supported values are "web" and "android".');
       }
     }
+
+    let episodeLimit = 0;
+    if (config.episode_limit !== undefined && config.episode_limit !== null && config.episode_limit !== '') {
+      const parsedLimit = Number(config.episode_limit);
+      if (!Number.isFinite(parsedLimit) || parsedLimit < 0) {
+        throw new Error('Invalid value for episode_limit. Must be a number greater than or equal to 0.');
+      }
+      episodeLimit = Math.floor(parsedLimit);
+    }
     this.config = {
       ...config,
       // Only show the browser button when explicitly enabled.
       show_browser_option: config.show_browser_option === true,
       // By default, include season premieres (SxxE01).
-      display_new_seasons: config.display_new_seasons !== false
+      display_new_seasons: config.display_new_seasons !== false,
+      // 0 (or unset) means no limit.
+      episode_limit: episodeLimit
     };
   }
 

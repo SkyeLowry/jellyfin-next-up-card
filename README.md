@@ -60,12 +60,14 @@ hide_play_button: false
 show_runtime: true
 show_browser_option: true
 display_new_seasons: true
+episode_limit: 0
 ```
 
 - Now you should be able to see all the shows you're watching!
 
 ### Options
 - `display_new_seasons` (default: `true`): When set to `false`, hides season premiere episodes (`SxxE01`).
+- `episode_limit` (default: `0`): Limits the number of episodes shown. Set to `0` (or omit) for no limit. Example: `episode_limit: 4`.
 
 ## Troubleshooting
 
