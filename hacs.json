@@ -1,5 +1,5 @@
 {
-    "name": "Jellyfin Next Up Card",
+    "name": "Jellyfin Next Up Card (Android ADB)",
     "render_readme": true,
     "filename": "jellyfin-next-up-card.js",
     "hide_default_branch": true
