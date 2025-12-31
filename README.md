@@ -59,9 +59,13 @@ android_entity_id: <android-adb-entity-id>
 hide_play_button: false
 show_runtime: true
 show_browser_option: true
+display_new_seasons: true
 ```
 
 - Now you should be able to see all the shows you're watching!
+
+### Options
+- `display_new_seasons` (default: `true`): When set to `false`, hides season premiere episodes (`SxxE01`).
 
 ## Troubleshooting
 
