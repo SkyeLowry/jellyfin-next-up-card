@@ -1,0 +1,53 @@
+name: Release
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  tag-and-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Read package.json version
+        id: pkg
+        run: |
+          VERSION="$(node -p 'require("./package.json").version')"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Create tag if missing
+        env:
+          VERSION: v${{ steps.pkg.outputs.version }}
+        run: |
+          if git rev-parse "$VERSION" >/dev/null 2>&1; then
+            echo "Tag already exists: $VERSION"
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git tag -a "$VERSION" -m "$VERSION"
+          git push origin "$VERSION"
+
+      - name: Create GitHub release if missing
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: v${{ steps.pkg.outputs.version }}
+        run: |
+          if gh release view "$VERSION" >/dev/null 2>&1; then
+            echo "Release already exists: $VERSION"
+            exit 0
+          fi
+
+          gh release create "$VERSION" --generate-notes
+
