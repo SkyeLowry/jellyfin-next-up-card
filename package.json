@@ -1,7 +1,7 @@
 {
   "name": "jellyfin-next-up-card",
   "version": "1.2.0",
-  "description": "Lovelace jellyfin-next-up-card",
+  "description": "Lovelace jellyfin-next-up-card for Android TV with ADB",
   "keywords": [
     "home-assistant",
     "homeassistant",
