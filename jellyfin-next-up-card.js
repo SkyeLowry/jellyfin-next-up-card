@@ -1,5 +1,5 @@
 console.info(
-  `%c  JELLYFIN-NEXT-UP-CARD  \n%c      Version 1.2.0      `,
+  `%c  JELLYFIN-NEXT-UP-CARD  \n%c      Version 1.3.0      `,
   'color: orange; font-weight: bold; background: black',
   'color: white; font-weight: bold; background: dimgray'
 );
