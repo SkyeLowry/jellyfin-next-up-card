@@ -86,7 +86,14 @@ class JellyfinNextUpCard extends HTMLElement {
 
       itemHtml += `
         ><div class="episode-details" data-episode-id="${item.Id}">
-        <div class="series-title" >${item.SeriesName}</div>
+        <div class="series-title">
+          ${
+            this.config.jellyfin_host && item.ParentLogoItemId
+              ? `<img class="series-logo" src="${this.getSeriesLogoURL(item.ParentLogoItemId)}" alt="${item.SeriesName}" title="${item.SeriesName}" onerror="this.remove()" />`
+              : ''
+          }
+          <span class="series-title-text">${item.SeriesName}</span>
+        </div>
         <span class="episode-title">${item.Name}</span>
         • <span class="episode-number" >s${(item.ParentIndexNumber+'').padStart(2, '0')}e${(item.IndexNumber+'').padStart(2, '0')}</span>
       `;
@@ -223,6 +230,10 @@ class JellyfinNextUpCard extends HTMLElement {
     return `${this.config.jellyfin_host}/Items/${episodeId}/Images/Primary?tag=${imageTag}`;
   }
 
+  getSeriesLogoURL(logoItemId) {
+    return `${this.config.jellyfin_host}/Items/${logoItemId}/Images/Logo`;
+  }
+
   playEpisode(episodeId, player) {
     if (!player || player === 'default') {
       player = this.config.default_player;
@@ -300,6 +311,20 @@ class JellyfinNextUpCard extends HTMLElement {
         font-size: 2em;
         line-height: 1.5em;
         color: #fff;
+        margin-bottom: 0.25em;
+      }
+      .series-logo {
+        display: block;
+        max-height: 2.25em;
+        max-width: 100%;
+        object-fit: contain;
+        object-position: left center;
+      }
+      .series-title-text {
+        display: block;
+      }
+      .series-logo + .series-title-text {
+        display: none;
       }
       .episode-title {
         color: #fff;
