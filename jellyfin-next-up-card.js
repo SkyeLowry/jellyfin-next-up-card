@@ -16,7 +16,8 @@ class JellyfinNextUpCard extends HTMLElement {
       android_entity_id: '',
       hide_play_button: false,
       show_runtime: true,
-      show_browser_option: false
+      show_browser_option: false,
+      display_new_seasons: true
     }
   }
   // Whenever the state changes, a new `hass` object is set. Use this to
@@ -66,6 +67,10 @@ class JellyfinNextUpCard extends HTMLElement {
 
     for (const item of items) {
       if (!item?.Name || !item.Id || !item.IndexNumber || !item.ParentIndexNumber || !item.SeriesName || !item.SeriesId) {
+        continue;
+      }
+      // Optionally hide season premieres (S??E01).
+      if (this.config.display_new_seasons === false && item.IndexNumber === 1) {
         continue;
       }
 
@@ -171,7 +176,9 @@ class JellyfinNextUpCard extends HTMLElement {
     this.config = {
       ...config,
       // Only show the browser button when explicitly enabled.
-      show_browser_option: config.show_browser_option === true
+      show_browser_option: config.show_browser_option === true,
+      // By default we show new seasons; only hide when explicitly disabled.
+      display_new_seasons: config.display_new_seasons !== false
     };
   }
 
